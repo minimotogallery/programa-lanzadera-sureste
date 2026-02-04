@@ -20,6 +20,11 @@
   <body>
     <main class="page" aria-label="Minimoto Gallery">
       <div class="hero">
+        <button class="mode" type="button" id="mode" aria-label="Cambiar modo de color">
+          <span class="modeDot" aria-hidden="true"></span>
+          <span class="modeText">Mode</span>
+        </button>
+
         <div class="logo" aria-hidden="true">
           <!-- Logo: tres puntos (brand) en composiciones sutiles -->
           <div class="dots" aria-hidden="true">
@@ -33,6 +38,28 @@
       </div>
     </main>
 
-<!-- no script -->
+    <script>
+      (function () {
+        const key = 'minimoto:mode';
+        const root = document.documentElement;
+        const btn = document.getElementById('mode');
+
+        function apply(mode) {
+          root.dataset.mode = mode;
+          try { localStorage.setItem(key, mode); } catch {}
+        }
+
+        // init
+        let mode;
+        try { mode = localStorage.getItem(key); } catch {}
+        if (!mode) mode = 'dark';
+        apply(mode);
+
+        btn?.addEventListener('click', () => {
+          const next = (root.dataset.mode === 'light') ? 'dark' : 'light';
+          apply(next);
+        });
+      })();
+    </script>
   </body>
 </html>
