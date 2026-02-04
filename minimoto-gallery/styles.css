@@ -68,13 +68,17 @@ body {
   box-shadow: none;
 }
 
-/* Top-right control: modern, safe-area aware, stays put */
-.mode {
+/* Top-right controls: modern, safe-area aware, stays put */
+.controls {
   position: fixed;
   top: calc(16px + env(safe-area-inset-top));
   right: calc(16px + env(safe-area-inset-right));
   z-index: 10;
+  display: inline-flex;
+  gap: 10px;
+}
 
+.chip {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -100,14 +104,14 @@ body {
     opacity 220ms ease;
 }
 
-.mode:hover { transform: translateY(-1px); }
-.mode:active { transform: translateY(0); }
-.mode:focus-visible {
+.chip:hover { transform: translateY(-1px); }
+.chip:active { transform: translateY(0); }
+.chip:focus-visible {
   outline: 2px solid color-mix(in oklab, var(--accent) 55%, transparent);
   outline-offset: 3px;
 }
 
-.modeDot {
+.chipDot {
   width: 8px;
   height: 8px;
   border-radius: 999px;
@@ -115,7 +119,12 @@ body {
   box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 25%, transparent);
 }
 
-.modeText { opacity: 0.9; }
+.chipDot--muted {
+  background: color-mix(in oklab, var(--ink) 70%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--ink) 12%, transparent);
+}
+
+.chipText { opacity: 0.9; }
 
 .logo {
   width: 124px;

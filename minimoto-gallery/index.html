@@ -20,10 +20,16 @@
   <body>
     <main class="page" aria-label="Minimoto Gallery">
       <div class="hero">
-        <button class="mode" type="button" id="mode" aria-label="Cambiar modo de color">
-          <span class="modeDot" aria-hidden="true"></span>
-          <span class="modeText">Mode</span>
-        </button>
+        <div class="controls" aria-label="Controls">
+          <button class="chip" type="button" id="sound" aria-label="Sonido: iniciar o pausar">
+            <span class="chipDot" aria-hidden="true"></span>
+            <span class="chipText" id="soundText">Sound</span>
+          </button>
+          <button class="chip" type="button" id="mode" aria-label="Cambiar modo de color">
+            <span class="chipDot chipDot--muted" aria-hidden="true"></span>
+            <span class="chipText">Mode</span>
+          </button>
+        </div>
 
         <div class="logo" aria-hidden="true">
           <!-- Logo: tres puntos (brand) en composiciones sutiles -->
@@ -40,24 +46,148 @@
 
     <script>
       (function () {
-        const key = 'minimoto:mode';
+        // ---- Mode toggle ----
+        const modeKey = 'minimoto:mode';
         const root = document.documentElement;
-        const btn = document.getElementById('mode');
+        const modeBtn = document.getElementById('mode');
 
-        function apply(mode) {
+        function applyMode(mode) {
           root.dataset.mode = mode;
-          try { localStorage.setItem(key, mode); } catch {}
+          try { localStorage.setItem(modeKey, mode); } catch {}
         }
 
-        // init
         let mode;
-        try { mode = localStorage.getItem(key); } catch {}
+        try { mode = localStorage.getItem(modeKey); } catch {}
         if (!mode) mode = 'dark';
-        apply(mode);
+        applyMode(mode);
 
-        btn?.addEventListener('click', () => {
+        modeBtn?.addEventListener('click', () => {
           const next = (root.dataset.mode === 'light') ? 'dark' : 'light';
-          apply(next);
+          applyMode(next);
+        });
+
+        // ---- Background music (YouTube) ----
+        // Autoplay with sound is blocked; we start on first user interaction (Option A).
+        const YT_ID = 'u3G-Kz-X0Ws';
+        const soundKey = 'minimoto:sound';
+        const soundBtn = document.getElementById('sound');
+        const soundText = document.getElementById('soundText');
+
+        let player;
+        let started = false;
+        let enabled = true;
+        try {
+          const saved = localStorage.getItem(soundKey);
+          if (saved === 'off') enabled = false;
+        } catch {}
+
+        function setSoundUI(on) {
+          if (!soundText) return;
+          soundText.textContent = on ? 'Sound' : 'Muted';
+          soundBtn?.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+
+        function loadYT() {
+          if (window.YT && window.YT.Player) return Promise.resolve();
+          return new Promise((resolve) => {
+            const s = document.createElement('script');
+            s.src = 'https://www.youtube.com/iframe_api';
+            s.async = true;
+            document.head.appendChild(s);
+            window.onYouTubeIframeAPIReady = () => resolve();
+          });
+        }
+
+        function ensurePlayer() {
+          if (player) return;
+          const host = document.createElement('div');
+          host.id = 'ytbg';
+          host.style.position = 'fixed';
+          host.style.width = '1px';
+          host.style.height = '1px';
+          host.style.left = '-9999px';
+          host.style.top = '0';
+          document.body.appendChild(host);
+
+          player = new window.YT.Player('ytbg', {
+            videoId: YT_ID,
+            playerVars: {
+              autoplay: 0,
+              controls: 0,
+              disablekb: 1,
+              fs: 0,
+              iv_load_policy: 3,
+              modestbranding: 1,
+              playsinline: 1,
+              rel: 0,
+              loop: 1,
+              playlist: YT_ID
+            },
+            events: {
+              onReady: (e) => {
+                // Start muted until user interaction actually calls play.
+                try { e.target.setVolume(35); } catch {}
+              },
+              onStateChange: (e) => {
+                // If video ends (shouldn't with loop), restart.
+                if (e.data === window.YT.PlayerState.ENDED) {
+                  try { e.target.playVideo(); } catch {}
+                }
+              }
+            }
+          });
+        }
+
+        async function startSound() {
+          if (started) return;
+          started = true;
+          await loadYT();
+          ensurePlayer();
+          if (!enabled) {
+            setSoundUI(false);
+            return;
+          }
+          // user gesture path
+          try {
+            player.unMute?.();
+            player.playVideo?.();
+            setSoundUI(true);
+          } catch {
+            setSoundUI(false);
+          }
+        }
+
+        function stopSound() {
+          enabled = false;
+          try { localStorage.setItem(soundKey, 'off'); } catch {}
+          try { player?.pauseVideo?.(); } catch {}
+          setSoundUI(false);
+        }
+
+        function toggleSound() {
+          enabled = !enabled;
+          try { localStorage.setItem(soundKey, enabled ? 'on' : 'off'); } catch {}
+          if (!enabled) {
+            stopSound();
+            return;
+          }
+          // If enabling, try to play (may require gesture; button click is a gesture).
+          started = false;
+          startSound();
+        }
+
+        // Init UI
+        setSoundUI(enabled);
+
+        // First interaction anywhere starts sound
+        const first = () => startSound();
+        window.addEventListener('pointerdown', first, { once: true, passive: true });
+        window.addEventListener('keydown', first, { once: true });
+
+        // Dedicated control
+        soundBtn?.addEventListener('click', (e) => {
+          e.preventDefault();
+          toggleSound();
         });
       })();
     </script>
