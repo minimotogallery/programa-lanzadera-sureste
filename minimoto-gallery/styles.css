@@ -88,53 +88,7 @@ body {
 .dot.d2 { left: 38px; top: 22px; }
 .dot.d3 { left: 62px; top: 42px; }
 
-/* gentle composition morph */
-@media (prefers-reduced-motion: no-preference) {
-  .dot { animation: morph 7.5s ease-in-out infinite; }
-  .dot.d1 { animation-delay: 0s; }
-  .dot.d2 { animation-delay: 0.08s; }
-  .dot.d3 { animation-delay: 0.16s; }
-
-  @keyframes morph {
-    0%, 20% { transform: translate(0, 0); opacity: 1; }
-    /* line */
-    40% {
-      transform: translate(var(--tx, 0px), var(--ty, 0px));
-      opacity: 0.92;
-    }
-    /* diagonal */
-    70% {
-      transform: translate(var(--dx, 0px), var(--dy, 0px));
-      opacity: 0.88;
-    }
-    100% { transform: translate(0, 0); opacity: 1; }
-  }
-
-  /* per-dot vectors */
-  .dot.d1 { --tx: 0px;  --ty: -10px; --dx: 0px;  --dy: 6px; }
-  .dot.d2 { --tx: -8px; --ty: 10px;  --dx: 0px;  --dy: 0px; }
-  .dot.d3 { --tx: -16px;--ty: -10px; --dx: -6px; --dy: -6px; }
-}
-
-.wordmark {
-  margin: 0;
-  letter-spacing: -0.03em;
-  font-weight: 400;
-  line-height: 1.05;
-}
-
-.wordmark .name {
-  display: inline-block;
-  font-weight: 500;
-  text-transform: lowercase;
-}
-
-.wordmark .sub {
-  display: inline-block;
-  font-weight: 300;
-  opacity: 0.82;
-  margin-left: 10px;
-}
+/* Keep logo orientation fixed: triangle pointing up (no morph). */
 
 .tagline {
   margin: 14px 0 0;
@@ -142,24 +96,7 @@ body {
   color: var(--muted);
 }
 
-.micro {
-  margin: 10px auto 0;
-  max-width: 52ch;
-  font-size: 13px;
-  color: var(--muted2);
-}
-
-.footer {
-  margin-top: 34px;
-  padding-top: 18px;
-  border-top: 1px solid var(--hair);
-}
-
-.link {
-  color: rgba(242, 244, 248, 0.55);
-  text-decoration: none;
-  font-size: 12px;
-}
+/* (intentionally no extra text on this landing page) */
 
 /* Subtle motion: only if user allows it */
 @media (prefers-reduced-motion: no-preference) {
