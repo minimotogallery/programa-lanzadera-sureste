@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Minimoto Gallery — stay tuned." />
+    <meta name="theme-color" content="#0b0c0f" />
+
+    <title>Minimoto Gallery — Stay tuned</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <main class="page" aria-label="Minimoto Gallery">
+      <div class="hero">
+        <div class="logo" aria-hidden="true">
+          <!-- Minimal, aesthetic monogram: two arcs + dot -->
+          <svg viewBox="0 0 220 220" role="img" aria-label="Minimoto Gallery logo" focusable="false">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="var(--ink)" stop-opacity="0.92" />
+                <stop offset="1" stop-color="var(--ink)" stop-opacity="0.55" />
+              </linearGradient>
+            </defs>
+            <circle cx="110" cy="110" r="96" fill="none" stroke="url(#g)" stroke-width="2" opacity="0.75" />
+            <path d="M55 128 C 72 78, 95 62, 110 62 C 135 62, 150 85, 165 128" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />
+            <path d="M70 138 C 86 104, 98 96, 110 96 C 126 96, 140 110, 152 138" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" />
+            <circle cx="110" cy="156" r="3.5" fill="var(--ink)" opacity="0.9" />
+          </svg>
+        </div>
+
+        <h1 class="wordmark">
+          <span class="name">minimoto</span>
+          <span class="sub">gallery</span>
+        </h1>
+
+        <p class="tagline">Stay tuned.</p>
+
+        <p class="micro">Una página mínima por ahora. Pronto: piezas, historias y archivo.</p>
+
+        <div class="footer">
+          <a class="link" href="#" onclick="return false;" aria-disabled="true">© <span id="y"></span> Minimoto Gallery</a>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.getElementById('y').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
