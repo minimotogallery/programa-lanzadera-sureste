@@ -6,6 +6,7 @@
   <title>Programa Lanzadera Sureste · Nigredo</title>
   <meta name="description" content="Programa integral de profesionalización para artistas emergentes del sureste español (10 meses). Creación, formación, mediación, digitalización y circulación profesional." />
   <link rel="preload" href="assets/fonts/AVALADO-Sick.otf" as="font" type="font/otf" crossorigin>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -23,7 +24,13 @@
         <a href="#metodologia">Metodología</a>
         <a href="#impacto">Impacto</a>
       </nav>
-      <a class="btn btn--ghost" href="#contacto">Contacto</a>
+      <div class="topbar__actions">
+        <button class="iconbtn" id="themeToggle" type="button" aria-label="Cambiar estilo (oscuro/claro)" aria-pressed="false" title="Cambiar estilo">
+          <span class="iconbtn__dot" aria-hidden="true"></span>
+          <span class="iconbtn__label">Estilo</span>
+        </button>
+        <a class="btn btn--ghost" href="#contacto">Contacto</a>
+      </div>
     </div>
   </header>
 

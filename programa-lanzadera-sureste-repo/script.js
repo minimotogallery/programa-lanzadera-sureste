@@ -2,6 +2,31 @@
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
 
+  // Theme toggle (dark ↔︎ light institutional)
+  const key = 'pls-theme';
+  const btn = document.getElementById('themeToggle');
+  const apply = (theme) => {
+    if (theme === 'light') {
+      document.body.dataset.theme = 'light';
+      btn?.setAttribute('aria-pressed', 'true');
+      btn?.setAttribute('title', 'Cambiar a estilo oscuro');
+    } else {
+      delete document.body.dataset.theme;
+      btn?.setAttribute('aria-pressed', 'false');
+      btn?.setAttribute('title', 'Cambiar a estilo claro');
+    }
+  };
+
+  const saved = localStorage.getItem(key);
+  if (saved) apply(saved);
+
+  btn?.addEventListener('click', () => {
+    const next = document.body.dataset.theme === 'light' ? 'dark' : 'light';
+    if (next === 'light') localStorage.setItem(key, 'light');
+    else localStorage.setItem(key, 'dark');
+    apply(next);
+  });
+
   const els = Array.from(document.querySelectorAll('.reveal'));
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {

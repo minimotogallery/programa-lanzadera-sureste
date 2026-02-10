@@ -47,6 +47,62 @@ body{
 }
 .topbar__inner{display:flex; align-items:center; gap:16px; padding:12px 0;}
 
+.topbar__actions{margin-left:auto; display:flex; align-items:center; gap:10px;}
+.iconbtn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+  color:var(--ink);
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+}
+.iconbtn:hover{background:rgba(255,255,255,.05);} 
+.iconbtn__dot{width:10px; height:10px; border-radius:999px; background:linear-gradient(135deg,var(--blood-2),var(--blood)); box-shadow:0 0 0 4px rgba(179,18,25,.14);} 
+.iconbtn__label{color:var(--muted);}
+
+/* Theme: Swiss / institutional light */
+body[data-theme="light"]{
+  --bg:#f6f6f7;
+  --panel:#ffffff;
+  --ink:#151517;
+  --muted:rgba(21,21,23,.72);
+  --line:rgba(21,21,23,.14);
+}
+body[data-theme="light"]{
+  background:
+    radial-gradient(900px 520px at 70% 10%, rgba(179,18,25,.10), transparent 60%),
+    radial-gradient(900px 600px at 20% 20%, rgba(125,12,16,.08), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f6f6f7 60%, #ffffff 100%);
+}
+body[data-theme="light"] .topbar{background:rgba(246,246,247,.75);} 
+body[data-theme="light"] .btn--ghost{background:rgba(21,21,23,.03);} 
+body[data-theme="light"] .card,
+body[data-theme="light"] .panel,
+body[data-theme="light"] .step,
+body[data-theme="light"] .split,
+body[data-theme="light"] .contact{
+  background:rgba(255,255,255,.85);
+}
+body[data-theme="light"] .hero__media,
+body[data-theme="light"] .facts div{background:rgba(255,255,255,.85);} 
+body[data-theme="light"] .title__accent{
+  background:linear-gradient(135deg, #151517 0%, rgba(21,21,23,.72) 40%, rgba(179,18,25,.95) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+body[data-theme="light"] .iconbtn__label{color:var(--muted);} 
+
+.btn{
+  margin-left:auto; /* (kept for legacy layout, overridden by .topbar__actions) */
+}
+
+@media (max-width: 980px){
+  .topbar__actions{margin-left:0;}
+}
+
 .brand{display:flex; align-items:center; gap:10px; min-width:160px;}
 .brand__dot{width:10px; height:10px; border-radius:999px; background:linear-gradient(135deg,var(--blood-2),var(--blood)); box-shadow:0 0 0 4px rgba(179,18,25,.14);} 
 .brand__name{font-weight:700; letter-spacing:.01em;}
